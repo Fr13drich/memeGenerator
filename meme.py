@@ -1,6 +1,8 @@
+"""The Meme Engine Module is responsible for manipulating and drawing text onto images."""
+
 import os
 import random
-
+from QuoteEngine import Ingestor, QuoteModel
 # @TODO Import your Ingestor and MemeEngine classes
 
 

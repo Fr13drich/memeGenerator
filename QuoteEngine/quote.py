@@ -27,7 +27,7 @@ class IngestorInterface(ABC):
     def parse(cls, path: str) -> List[QuoteModel]:
         """import a list of quotes from a file"""
 
-class CSVImporter(IngestorInterface):
+class CSVIngestor(IngestorInterface):
     """Import quotes from a csv file."""
     allowed_extensions = ['csv']
     def __init__(self, path: str) -> None:
@@ -36,14 +36,14 @@ class CSVImporter(IngestorInterface):
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         if not cls.can_ingest(path):
-            raise Exception('cannot ingest exception')
+            raise ValueError('Cannot ingest exception.')
         quotes = []
         df = pandas.read_csv(path, header=1)
         for body, author in df.iterrows():
             quotes.append(QuoteModel(body, author))
         return quotes
 
-class DocxImporter(IngestorInterface):
+class DocxIngestor(IngestorInterface):
     """Import quotes from a docx file."""
     allowed_extensions = ['docx']
     def __init__(self, path: str) -> None:
@@ -52,7 +52,7 @@ class DocxImporter(IngestorInterface):
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         if not cls.can_ingest(path):
-            raise Exception('cannot ingest exception')
+            raise ValueError('Cannot ingest exception.')
         quotes = []
         doc = Document(path)
         for line in doc.paragraphs:
@@ -60,7 +60,7 @@ class DocxImporter(IngestorInterface):
             quotes.append(QuoteModel(body, author))
         return quotes
 
-class PdfImporter(IngestorInterface):
+class PdfIngestor(IngestorInterface):
     """Import quotes from a pdf file."""
     allowed_extensions = ['pdf']
     def __init__(self, path: str) -> None:
@@ -69,15 +69,15 @@ class PdfImporter(IngestorInterface):
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         if not cls.can_ingest(path):
-            raise Exception('cannot ingest exception')
+            raise ValueError('Cannot ingest exception.')
         quotes = []
         p = subprocess.run(['pdftotxt', path], stdout=subprocess.PIPE, check=True)
         for line in p.stdout:
             body, author = line.split(' - ')
             quotes.append(QuoteModel(body, author))
         return quotes
-        
-class TxtImporter(IngestorInterface):
+
+class TxtIngestor(IngestorInterface):
     """Import quotes from a text file."""
     allowed_extensions = ['txt']
     def __init__(self, path: str) -> None:
@@ -86,9 +86,9 @@ class TxtImporter(IngestorInterface):
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         if not cls.can_ingest(path):
-            raise Exception('cannot ingest exception')
+            raise ValueError('Cannot ingest exception.')
         quotes = []
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             for line in f:
                 body, author = line.split(' - ')
                 quotes.append(QuoteModel(body, author))
@@ -103,14 +103,16 @@ class Ingestor(IngestorInterface):
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         if not cls.can_ingest(path):
-            raise Exception('cannot ingest exception')
+            raise ValueError('Cannot ingest exception.')
         ext = path.split('.')[-1]
         if ext == 'docx':
-            importer = DocxImporter
+            importer = DocxIngestor
         elif ext == 'pfd':
-            importer = PdfImporter
+            importer = PdfIngestor
         elif ext == 'txt':
-            importer = TxtImporter
+            importer = TxtIngestor
+        elif ext == 'csv':
+            importer = CSVIngestor
         else:
-            importer = CSVImporter
+            raise ValueError('Unsupported file format.')
         return importer.parse(path)

@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from typing import List
 import subprocess
 import pandas
-from docx import Document
+from docx import Document 
 # import docx
 
 
@@ -56,8 +56,13 @@ class DocxIngestor(IngestorInterface):
         quotes = []
         doc = Document(path)
         for line in doc.paragraphs:
-            body, author = line.text.split(' - ')
-            quotes.append(QuoteModel(body, author))
+            try:
+                body, author = line.text.split(' - ')
+                quotes.append(QuoteModel(body, author))
+            except ValueError:
+                pass
+                # raise ValueError(line.text)
+            
         return quotes
 
 class PdfIngestor(IngestorInterface):
@@ -71,7 +76,8 @@ class PdfIngestor(IngestorInterface):
         if not cls.can_ingest(path):
             raise ValueError('Cannot ingest exception.')
         quotes = []
-        p = subprocess.run(['pdftotxt', path], stdout=subprocess.PIPE, check=True)
+        print(path)
+        p = subprocess.run(['pdftotext.exe', '-layout', path], stdout=subprocess.PIPE, check=True)
         for line in p.stdout:
             body, author = line.split(' - ')
             quotes.append(QuoteModel(body, author))
@@ -107,12 +113,13 @@ class Ingestor(IngestorInterface):
         ext = path.split('.')[-1]
         if ext == 'docx':
             importer = DocxIngestor
-        elif ext == 'pfd':
+        elif ext == 'pdf':
             importer = PdfIngestor
         elif ext == 'txt':
             importer = TxtIngestor
         elif ext == 'csv':
             importer = CSVIngestor
         else:
-            raise ValueError('Unsupported file format.')
+            print(ext)
+            raise ValueError('Unsupported file format: ' + ext)
         return importer.parse(path)

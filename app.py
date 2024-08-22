@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 meme = MemeEngine('./static/out.jpg')
 
+
 def setup():
     """ Load all resources """
 

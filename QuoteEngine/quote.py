@@ -1,4 +1,4 @@
-"""load and parse quotes from files"""
+"""Load and parse quotes from files"""
 
 from abc import ABC, abstractmethod
 from typing import List
@@ -14,25 +14,31 @@ class QuoteModel():
         self.body = body
         self.author = author
 
+
 class IngestorInterface(ABC):
     """generic class to import quotes from files"""
     allowed_extensions = []
+
     @classmethod
     def can_ingest(cls, path) -> bool:
         """is the extension supported?"""
         ext = path.split('.')[-1]
         return ext in cls.allowed_extensions
+
     @classmethod
     @abstractmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         """import a list of quotes from a file"""
 
+
 class CSVIngestor(IngestorInterface):
     """Import quotes from a csv file."""
     allowed_extensions = ['csv']
+
     def __init__(self, path: str) -> None:
         super().__init__()
         self.path = path
+
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         if not cls.can_ingest(path):
@@ -43,12 +49,15 @@ class CSVIngestor(IngestorInterface):
             quotes.append(QuoteModel(body, author))
         return quotes
 
+
 class DocxIngestor(IngestorInterface):
     """Import quotes from a docx file."""
     allowed_extensions = ['docx']
+
     def __init__(self, path: str) -> None:
         super().__init__()
         self.path = path
+
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         if not cls.can_ingest(path):
@@ -64,12 +73,15 @@ class DocxIngestor(IngestorInterface):
                 # raise ValueError(line.text)
         return quotes
 
+
 class PdfIngestor(IngestorInterface):
     """Import quotes from a pdf file."""
     allowed_extensions = ['pdf']
+
     def __init__(self, path: str) -> None:
         super().__init__()
         self.path = path
+
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         if not cls.can_ingest(path):
@@ -82,12 +94,15 @@ class PdfIngestor(IngestorInterface):
             quotes.append(QuoteModel(body, author))
         return quotes
 
+
 class TxtIngestor(IngestorInterface):
     """Import quotes from a text file."""
     allowed_extensions = ['txt']
+
     def __init__(self, path: str) -> None:
         super().__init__()
         self.path = path
+
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         if not cls.can_ingest(path):
@@ -99,12 +114,15 @@ class TxtIngestor(IngestorInterface):
                 quotes.append(QuoteModel(body, author))
         return quotes
 
+
 class Ingestor(IngestorInterface):
     """Import quotes from a supported file."""
     allowed_extensions = ['txt', 'docx', 'pdf', 'csv']
+
     def __init__(self, path: str) -> None:
         super().__init__()
         self.path = path
+
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         if not cls.can_ingest(path):

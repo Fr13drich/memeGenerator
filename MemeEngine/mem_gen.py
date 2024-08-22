@@ -6,17 +6,21 @@ Add a caption to an image (string input) with a body and author to a random loca
 import os
 from random import randint
 from PIL import Image, ImageDraw, ImageFont
+
+
 class MemeEngine:
     """
-    Loading of a file from disk
-    Transform image by resizing to a maximum width of 500px while maintaining the input aspect ratio
-    Add a caption to an image (string input) with a body and author to a random location on the image.
+    Loading of a file from disk.
+    Transform image by resizing to a maximum width of 500px
+    while maintaining the input aspect ratio.
+    Add a caption to an image (string input) with a body and
+    author to a random location on the image.
     """
 
     def __init__(self, out_path) -> None:
         self.out_path = out_path
 
-    def make_meme(self, img_path, text: str, author: str, width=500) -> str: #generated image path
+    def make_meme(self, img_path, text: str, author: str, width=500) -> str:
         """Create a Postcard With a Text Greeting
 
         Arguments:
@@ -35,7 +39,7 @@ class MemeEngine:
         font = ImageFont.truetype('./fonts/Roboto-Black.ttf', size=30)
         # draw.text((10, 30), text + ' - ' + author, font=font, fill='white')
         msg = str(text) + ' - ' + str(author)
-        loc = (10, randint(0,img.size[1] - 1))
+        loc = (10, randint(0, img.size[1] - 1))
         draw.text(loc, msg, font=font, fill='white')
         print(self.out_path)
         img.save(self.out_path)

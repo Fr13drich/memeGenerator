@@ -1,4 +1,7 @@
-"""The Meme Engine Module is responsible for manipulating and drawing text onto images."""
+"""
+The Meme Engine Module is responsible for manipulating 
+and drawing text onto images.
+"""
 
 import os
 import random

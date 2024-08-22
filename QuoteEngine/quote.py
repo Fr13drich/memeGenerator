@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from typing import List
 import subprocess
 import pandas
-from docx import Document 
+from docx import Document
 # import docx
 
 
@@ -62,7 +62,6 @@ class DocxIngestor(IngestorInterface):
             except ValueError:
                 pass
                 # raise ValueError(line.text)
-            
         return quotes
 
 class PdfIngestor(IngestorInterface):

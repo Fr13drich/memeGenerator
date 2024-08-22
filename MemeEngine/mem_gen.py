@@ -35,12 +35,9 @@ class MemeEngine:
         height = int(ratio*float(img.size[1]))
         img = img.resize((width, height), Image.NEAREST)
         draw = ImageDraw.Draw(img)
-        # font = ImageFont.load("./fonts/Roboto-Black.ttf")
         font = ImageFont.truetype('./fonts/Roboto-Black.ttf', size=30)
-        # draw.text((10, 30), text + ' - ' + author, font=font, fill='white')
         msg = str(text) + ' - ' + str(author)
         loc = (10, randint(0, img.size[1] - 1))
         draw.text(loc, msg, font=font, fill='white')
-        print(self.out_path)
         img.save(self.out_path)
         return self.out_path

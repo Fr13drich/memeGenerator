@@ -22,8 +22,26 @@ jobs:
           name: "Install pycodestyle"
           command: "pip install pycodestyle"
       - run:
-          name: "Style"
-          command: "find . -name *.py | xargs pycodestyle"
+          name: "Install pylint"
+          command: "pip install pylint"
+      - run:
+          name: "Style main directory"
+          command: "ls *.py | xargs pycodestyle"
+      - run:
+          name: "Lint main directory"
+          command: "ls *.py | xargs pylint"
+      - run:
+          name: "Style Meme engine module"
+          command: "ls MemeEngine/*.py | xargs pycodestyle"
+      - run:
+          name: "Lint Meme engine module"
+          command: "ls MemeEngine/*.py | xargs pylint"
+      - run:
+          name: "Style Quote engine module"
+          command: "ls QuoteEngine/*.py | xargs pycodestyle"
+      - run:
+          name: "Lint Quote engine module"
+          command: "ls QuoteEngine/*.py | xargs pylint"
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows

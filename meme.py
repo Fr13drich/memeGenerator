@@ -7,8 +7,8 @@ and drawing text onto images.
 import os
 import random
 import argparse
-from QuoteEngine import Ingestor, QuoteModel
-from MemeEngine import MemeEngine
+from .QuoteEngine import Ingestor, QuoteModel
+from .MemeEngine import MemeEngine
 
 
 def generate_meme(path=None, body=None, author=None):
@@ -19,7 +19,7 @@ def generate_meme(path=None, body=None, author=None):
     if path is None:
         images = "./_data/photos/dog/"
         imgs = []
-        for root, dirs, files in os.walk(images):
+        for root, _dirs, files in os.walk(images):
             imgs = [os.path.join(root, name) for name in files]
 
         img = random.choice(imgs)

@@ -1,18 +1,17 @@
-"""
-Loading of a file from disk.
+"""Load a file from disk.
+
 Transform image by resizing to a maximum width
 of 500px while maintaining the input aspect ratio.
 Add a caption to an image (string input) with a
 body and author to a random location on the image.
 """
-import os
 from random import randint
 from PIL import Image, ImageDraw, ImageFont
 
 
 class MemeEngine:
-    """
-    Loading of a file from disk.
+    """Load a file from disk.
+
     Transform image by resizing to a maximum width of 500px
     while maintaining the input aspect ratio.
     Add a caption to an image (string input) with a body and
@@ -20,10 +19,11 @@ class MemeEngine:
     """
 
     def __init__(self, out_path) -> None:
+        """Constructor."""
         self.out_path = out_path
 
     def make_meme(self, img_path, text: str, author: str, width=500) -> str:
-        """Create a Postcard With a Text Greeting
+        """Create a Postcard With a Text Greeting.
 
         Arguments:
             img_path {str} -- the file location for the input image.

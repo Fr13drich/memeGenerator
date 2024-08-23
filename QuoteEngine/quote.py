@@ -1,4 +1,4 @@
-"""Load and parse quotes from files"""
+"""Load and parse quotes from files."""
 
 from abc import ABC, abstractmethod
 from typing import List
@@ -9,38 +9,43 @@ from docx import Document
 
 
 class QuoteModel():
-    """a quote and its author"""
+    """A quote and its author."""
+
     def __init__(self, body="", author="") -> None:
         self.body = body
         self.author = author
 
 
 class IngestorInterface(ABC):
-    """generic class to import quotes from files"""
+    """Generic class to import quotes from files."""
+
     allowed_extensions = []
 
     @classmethod
     def can_ingest(cls, path) -> bool:
-        """is the extension supported?"""
+        """Is the extension supported?."""
         ext = path.split('.')[-1]
         return ext in cls.allowed_extensions
 
     @classmethod
     @abstractmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """import a list of quotes from a file"""
+        """Import a list of quotes from a file."""
 
 
 class CSVIngestor(IngestorInterface):
     """Import quotes from a csv file."""
+
     allowed_extensions = ['csv']
 
     def __init__(self, path: str) -> None:
+        """Constructor."""
         super().__init__()
         self.path = path
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """Ingest the file."""
         if not cls.can_ingest(path):
             raise ValueError('Cannot ingest exception.')
         quotes = []
@@ -52,14 +57,17 @@ class CSVIngestor(IngestorInterface):
 
 class DocxIngestor(IngestorInterface):
     """Import quotes from a docx file."""
+
     allowed_extensions = ['docx']
 
     def __init__(self, path: str) -> None:
+        """Constructor."""
         super().__init__()
         self.path = path
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """Ingest quotes file."""
         if not cls.can_ingest(path):
             raise ValueError('Cannot ingest exception.')
         quotes = []
@@ -76,9 +84,11 @@ class DocxIngestor(IngestorInterface):
 
 class PdfIngestor(IngestorInterface):
     """Import quotes from a pdf file."""
+
     allowed_extensions = ['pdf']
 
     def __init__(self, path: str) -> None:
+        """Constructor."""
         super().__init__()
         self.path = path
 

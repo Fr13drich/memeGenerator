@@ -1,7 +1,9 @@
 """
-Loading of a file from disk
-Transform image by resizing to a maximum width of 500px while maintaining the input aspect ratio
-Add a caption to an image (string input) with a body and author to a random location on the image.
+Loading of a file from disk.
+Transform image by resizing to a maximum width
+of 500px while maintaining the input aspect ratio.
+Add a caption to an image (string input) with a
+body and author to a random location on the image.
 """
 import os
 from random import randint

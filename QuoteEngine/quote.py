@@ -88,7 +88,8 @@ class PdfIngestor(IngestorInterface):
             raise ValueError('Cannot ingest exception.')
         quotes = []
         print(path)
-        p = subprocess.run(['pdftotext.exe', '-layout', path], stdout=subprocess.PIPE, check=True)
+        p = subprocess.run(['pdftotext.exe', '-layout', path],
+                           stdout=subprocess.PIPE, check=True)
         for line in p.stdout:
             body, author = line.split(' - ')
             quotes.append(QuoteModel(body, author))

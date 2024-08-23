@@ -19,6 +19,9 @@ jobs:
       # Checkout the code as the first step.
       - checkout
       - run:
+          name: "Install pycodestyle"
+          command: "pip install pycodestyle"
+      - run:
           name: "Style"
           command: "find . -name *.py | xargs pycodestyle"
 

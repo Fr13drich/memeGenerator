@@ -1,8 +1,9 @@
-"""
-The Meme Engine Module is responsible for manipulating
-and drawing text onto images.
-"""
+"""The Meme Engine module.
 
+The Meme Engine module is responsible for manipulating
+and drawing text onto images.
+
+"""
 import os
 import random
 import argparse
@@ -11,7 +12,7 @@ from MemeEngine import MemeEngine
 
 
 def generate_meme(path=None, body=None, author=None):
-    """ Generate a meme given an path and a quote """
+    """Generate a meme given an path and a quote."""
     img = None
     quote = None
 

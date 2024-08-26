@@ -51,6 +51,7 @@ class CSVIngestor(IngestorInterface):
         quotes = []
         df = pandas.read_csv(path, header=1)
         for body, author in df.iterrows():
+            #TOFIX
             quotes.append(QuoteModel(body, author))
         return quotes
 
@@ -94,6 +95,7 @@ class PdfIngestor(IngestorInterface):
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """Ingest quotes from a pdf file."""
         if not cls.can_ingest(path):
             raise ValueError('Cannot ingest exception.')
         quotes = []
@@ -108,14 +110,17 @@ class PdfIngestor(IngestorInterface):
 
 class TxtIngestor(IngestorInterface):
     """Import quotes from a text file."""
+
     allowed_extensions = ['txt']
 
     def __init__(self, path: str) -> None:
+        """Constructor."""
         super().__init__()
         self.path = path
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """Ingest the file."""
         if not cls.can_ingest(path):
             raise ValueError('Cannot ingest exception.')
         quotes = []
@@ -128,14 +133,17 @@ class TxtIngestor(IngestorInterface):
 
 class Ingestor(IngestorInterface):
     """Import quotes from a supported file."""
+
     allowed_extensions = ['txt', 'docx', 'pdf', 'csv']
 
     def __init__(self, path: str) -> None:
+        """Constructor."""
         super().__init__()
         self.path = path
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """Ingest a docx file."""
         if not cls.can_ingest(path):
             raise ValueError('Cannot ingest exception.')
         ext = path.split('.')[-1]

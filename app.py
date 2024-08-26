@@ -4,8 +4,8 @@ import os
 import requests
 from flask import Flask, render_template, abort, request
 from PIL import Image
-from .QuoteEngine import Ingestor
-from .MemeEngine import MemeEngine
+from QuoteEngine.quote import Ingestor
+from MemeEngine.mem_gen import MemeEngine
 
 app = Flask(__name__)
 
@@ -56,7 +56,11 @@ def meme_post():
     image_url = request.form['image_url']
     body = request.form['body']
     author = request.form['author']
-    img = requests.get(image_url, allow_redirects=True, timeout=10)
+    try:
+        img = requests.get(image_url, allow_redirects=True, timeout=10)
+    except requests.exceptions.ConnectionError:
+        return render_template('meme_error.html')
+
     with open('./static/out.jpg', 'wb') as i:
         i.write(img.content)
     path = meme.make_meme('./static/out.jpg', body, author)

@@ -7,6 +7,7 @@ body and author to a random location on the image.
 """
 from random import randint
 from PIL import Image, ImageDraw, ImageFont
+import textwrap 
 
 
 class MemeEngine:
@@ -38,8 +39,10 @@ class MemeEngine:
         img = img.resize((width, height), Image.NEAREST)
         draw = ImageDraw.Draw(img)
         font = ImageFont.truetype('./fonts/Roboto-Black.ttf', size=30)
+        wrapper = textwrap.TextWrapper(width=30)
         msg = str(text) + ' - ' + str(author)
-        loc = (10, randint(0, img.size[1] - 1))
+        msg = wrapper.fill(text=msg) 
+        loc = (10, randint(0, img.size[1] - 30))
         draw.text(loc, msg, font=font, fill='white')
         img.save(self.out_path)
         return self.out_path

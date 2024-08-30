@@ -3,8 +3,8 @@ import random
 import os
 import requests
 from flask import Flask, render_template, request
-from QuoteEngine.quote import Ingestor
-from MemeEngine.mem_gen import MemeEngine
+from QuoteEngine import Ingestor
+from MemeEngine import MemeEngine
 
 app = Flask(__name__)
 

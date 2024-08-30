@@ -58,13 +58,11 @@ def meme_post():
     author = request.form['author']
     try:
         img = requests.get(image_url, allow_redirects=True, timeout=10)
-    except requests.exceptions.ConnectionError:
+        with open('./static/out.jpg', 'wb') as i:
+            i.write(img.content)
+        path = meme.make_meme('./static/out.jpg', body, author)
+    except (requests.exceptions.RequestException, OSError): # requests.exceptions.ConnectionError:
         return render_template('meme_error.html')
-
-    with open('./static/out.jpg', 'wb') as i:
-        i.write(img.content)
-    path = meme.make_meme('./static/out.jpg', body, author)
-
     return render_template('meme.html', path=path)
 
 

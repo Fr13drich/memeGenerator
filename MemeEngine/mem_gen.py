@@ -20,7 +20,7 @@ class MemeEngine:
     """
 
     def __init__(self, out_path) -> None:
-        """Constructor."""
+        """Construct."""
         self.out_path = out_path
 
     def make_meme(self, img_path, text: str, author: str, width=500) -> str:

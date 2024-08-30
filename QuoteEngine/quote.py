@@ -12,6 +12,7 @@ class QuoteModel():
     """A quote and its author."""
 
     def __init__(self, body="", author="") -> None:
+        """Construct."""
         self.body = body
         self.author = author
 
@@ -39,7 +40,7 @@ class CSVIngestor(IngestorInterface):
     allowed_extensions = ['csv']
 
     def __init__(self, path: str) -> None:
-        """Constructor."""
+        """Construct."""
         super().__init__()
         self.path = path
 
@@ -61,7 +62,7 @@ class DocxIngestor(IngestorInterface):
     allowed_extensions = ['docx']
 
     def __init__(self, path: str) -> None:
-        """Constructor."""
+        """Construct."""
         super().__init__()
         self.path = path
 
@@ -88,7 +89,7 @@ class PdfIngestor(IngestorInterface):
     allowed_extensions = ['pdf']
 
     def __init__(self, path: str) -> None:
-        """Constructor."""
+        """Construct."""
         super().__init__()
         self.path = path
 
@@ -112,7 +113,7 @@ class TxtIngestor(IngestorInterface):
     allowed_extensions = ['txt']
 
     def __init__(self, path: str) -> None:
-        """Constructor."""
+        """Construct."""
         super().__init__()
         self.path = path
 
@@ -135,7 +136,7 @@ class Ingestor(IngestorInterface):
     allowed_extensions = ['txt', 'docx', 'pdf', 'csv']
 
     def __init__(self, path: str) -> None:
-        """Constructor."""
+        """Construct."""
         super().__init__()
         self.path = path
 

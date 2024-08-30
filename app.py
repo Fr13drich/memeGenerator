@@ -61,7 +61,7 @@ def meme_post():
         with open('./static/out.jpg', 'wb') as i:
             i.write(img.content)
         path = meme.make_meme('./static/out.jpg', body, author)
-    except (requests.exceptions.RequestException, OSError): # requests.exceptions.ConnectionError:
+    except (requests.exceptions.RequestException, OSError):
         return render_template('meme_error.html')
     return render_template('meme.html', path=path)
 

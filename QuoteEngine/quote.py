@@ -50,9 +50,8 @@ class CSVIngestor(IngestorInterface):
             raise ValueError('Cannot ingest exception.')
         quotes = []
         df = pandas.read_csv(path, header=1)
-        for body, author in df.iterrows():
-            #TOFIX
-            quotes.append(QuoteModel(body, author))
+        for _index, row in df.iterrows():
+            quotes.append(QuoteModel(row[0], row[1]))
         return quotes
 
 

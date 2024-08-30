@@ -2,10 +2,9 @@
 import random
 import os
 import requests
-from flask import Flask, render_template, abort, request
-from PIL import Image
-from QuoteEngine.quote import Ingestor
-from MemeEngine.mem_gen import MemeEngine
+from flask import Flask, render_template, request
+from .QuoteEngine.quote import Ingestor
+from .MemeEngine.mem_gen import MemeEngine
 
 app = Flask(__name__)
 

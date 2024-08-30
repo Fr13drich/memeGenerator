@@ -51,7 +51,7 @@ class CSVIngestor(IngestorInterface):
         quotes = []
         df = pandas.read_csv(path, header=1)
         for _index, row in df.iterrows():
-            quotes.append(QuoteModel(row[0], row[1]))
+            quotes.append(QuoteModel(row.iloc[0], row.iloc[1]))
         return quotes
 
 
@@ -98,7 +98,6 @@ class PdfIngestor(IngestorInterface):
         if not cls.can_ingest(path):
             raise ValueError('Cannot ingest exception.')
         quotes = []
-        print(path)
         p = subprocess.run(['pdftotext.exe', '-layout', path],
                            stdout=subprocess.PIPE, check=True)
         for line in p.stdout:

@@ -5,9 +5,9 @@ of 500px while maintaining the input aspect ratio.
 Add a caption to an image (string input) with a
 body and author to a random location on the image.
 """
+import textwrap
 from random import randint
 from PIL import Image, ImageDraw, ImageFont
-import textwrap 
 
 
 class MemeEngine:
@@ -41,7 +41,7 @@ class MemeEngine:
         font = ImageFont.truetype('./fonts/Roboto-Black.ttf', size=30)
         wrapper = textwrap.TextWrapper(width=30)
         msg = str(text) + ' - ' + str(author)
-        msg = wrapper.fill(text=msg) 
+        msg = wrapper.fill(text=msg)
         loc = (10, randint(0, img.size[1] - 30))
         draw.text(loc, msg, font=font, fill='white')
         img.save(self.out_path)
